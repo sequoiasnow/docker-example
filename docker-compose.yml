@@ -1,0 +1,14 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile_nginx
+    container_name: example-4-nginx
+    ports:
+      - 80:80
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: example-4-server
