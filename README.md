@@ -1,21 +1,22 @@
-# Example 2
+# Example 3
 
-Example 2 fixes our caching problem by combining the step for modifying the
-executable file with the build step. This way we have one less "layer" stored
-in our Docker cake, and in turn a faster and smaller build.
+Example 3 fixes our dependence on gcc through use of something known as multi
+stage docker builds. We actually build our image in another container, and then
+copy the finished executable into our production container which is as minimal
+as possible. In this case we've shrunk our image size from `106MB` to `163KB`!
 
 ## Running the Example
 
 First build the image
 
 ```sh
-docker build . -t example-2
+docker build . -t example-3
 ```
 
 Then you can run it (on port 3000) using the following command
 
 ```sh
-docker run -p 3000:3000 example-2:latest
+docker run -p 3000:3000 example-3:latest
 ```
 
 You'll notice that there is no easy way to stop the container from running,
@@ -29,12 +30,8 @@ docker rm [name of your container]
 where `[name of your container]` is the name of your container found when
 looking at `docker ps`.
 
-
-
 ## Problems
 
 There are still several points of improvement for our container.
 
     - There is no way to stop our program
-    - Our image contains gcc even though we don't actually need it to run
-      our program
