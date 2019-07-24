@@ -1,15 +1,13 @@
-# Example 6
+# Docker-Example
 
-In Example 6 we've changed our code slightly in order to add a custom log which
-we can access the logs of our server. Note that we have to use the alpine
-image in order to pass arguments to our command and create the default file.
+This project is collected into 6 modules going through basic docker
+development practices. Each of these modules is a branch `example-#`
+you can check out.
 
-## Running the Example
-
-Run the environment
+To get started
 
 ```sh
-docker-compose up
+git clone https://github.com/the1codemaster/docker-example
+cd docker-example && git fetch
+git checkout example-1
 ```
-
-And access the server on [localhost:80](http://localhost:80)
