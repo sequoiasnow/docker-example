@@ -14,7 +14,7 @@ RUN gcc -static server.c -o server
 RUN chmod +x server
 
 
-FROM scratch
+FROM alpine
 
 EXPOSE 3000
 
@@ -22,4 +22,7 @@ WORKDIR /var/www
 
 COPY --from=builder /var/www/server /var/www/server
 
-CMD ["/var/www/server"]
+# Create an empty log
+RUN touch log.txt
+
+CMD ["/var/www/server", "-l", "/var/www/log.txt"]

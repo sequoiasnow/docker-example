@@ -21,8 +21,9 @@ char *response =
   "|  _  |  __/ | | (_) |   \\ V  V / (_) | |  | | (_| |\n"
   "|_| |_|\\___|_|_|\\___/     \\_/\\_/ \\___/|_|  |_|\\__,_|\n"
   "</pre>";
-int main() {
 
+int main(int argc, char *argv[]) {
+  FILE *logfile;                             /* File to log messages to  */
   int sockfd;                                /* Listening socket         */
   int connfd;                                /* Connecting socket        */
   struct sockaddr_in address;                /* Define server params     */
@@ -30,6 +31,17 @@ int main() {
   int lenread;                               /* Number of bytes read from request */
   char recv_data[CHUNK];                     /* Chunk read from incoming request */
   int response_len = strlen(response);       /* Length of response we send to the server */
+
+  /* Set the log file */
+  if (argc > 1 && 0 == strcmp(argv[1], "-l")) {
+    printf("Writing to log... %s\n", argv[2]);
+    logfile = fopen(argv[2], "w");
+  } else {
+    logfile = stdout;
+  }
+
+  /* Disable stdout buffering */
+  setbuf(logfile, NULL);
 
   /* Start listening for connections */
   if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -56,7 +68,7 @@ int main() {
   }
 
   /* Run the server */
-  printf("Listening on port %i....", PORT);
+  fprintf(logfile, "Listening on port %i....", PORT);
 
   while ( 1 ) {
     /* Accept a connection (from anywhere) when one becomes available */
@@ -70,7 +82,7 @@ int main() {
 
     /* Zero out some port of recv_data */
     *(recv_data + lenread) = 0;
-    printf("%s\n\n", recv_data);
+    fprintf(logfile, "%s\n\n", recv_data);
 
     /* Send a response */
     create_http_response(connfd, response, response_len + 1);
@@ -80,7 +92,7 @@ int main() {
       exit(EXIT_FAILURE);
     }
   }
-}
+  }
 
 void create_http_response(int client, char *message, int message_len) {
   send(client, "HTTP/1.0 200 OK\n", 16, 0);

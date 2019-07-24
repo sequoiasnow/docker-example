@@ -1,8 +1,8 @@
-# Example 5
+# Example 6
 
-Example 5 removes our custom nginx docker image and instead uses volumes
-to route our local file to the server. Moreover, we use an internal
-network to access our containers.
+In Example 6 we've changed our code slightly in order to add a custom log which
+we can access the logs of our server. Note that we have to use the alpine
+image in order to pass arguments to our command and create the default file.
 
 ## Running the Example
 
