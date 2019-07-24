@@ -1,14 +1,22 @@
 version: '3'
 services:
   nginx:
-    build:
-      context: .
-      dockerfile: Dockerfile_nginx
-    container_name: example-4-nginx
+    image: nginx:latest
+    container_name: example-5-nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
+    networks:
+      - velociraptor
   server:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: example-4-server
+    container_name: example-5-server
+    networks:
+      - velociraptor
+
+networks:
+  velociraptor:
+    driver: bridge

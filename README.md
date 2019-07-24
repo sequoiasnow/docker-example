@@ -1,7 +1,8 @@
-# Example 4
+# Example 5
 
-Example 4 adds support for an nginx reverse proxy to our application using
-docker compose.
+Example 5 removes our custom nginx docker image and instead uses volumes
+to route our local file to the server. Moreover, we use an internal
+network to access our containers.
 
 ## Running the Example
 
@@ -12,10 +13,3 @@ docker-compose up
 ```
 
 And access the server on [localhost:80](http://localhost:80)
-
-## Problems
-
-There are still several points of improvement for our container.
-
-    - we have a seperate dockerfile that does very little for nginx
-    - our contianers are running on the default network
