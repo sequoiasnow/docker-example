@@ -9,12 +9,9 @@ RUN apk add -U gcc libc-dev
 WORKDIR /var/www
 
 # Copy our code
-COPY . .
+COPY server.c .
 
-# Build our program
-RUN gcc server.c -o server
-
-# Make sure our program executable
-RUN chmod +x server
+# Build our program and ensure its executable
+RUN gcc server.c -o server && chmod +x server
 
 CMD ["/var/www/server"]

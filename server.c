@@ -11,8 +11,8 @@
 #define BACKLOG 4             /* The max number of connections to keep waiting */
 #define CHUNK   1024          /* How much data to read from an incoming connection */
 
-
 void create_http_response(int client, char *message, int message_len);
+
 char *response =
   "<pre>\n"
   " _   _      _ _        __        __         _     _ \n"
@@ -29,7 +29,7 @@ int main() {
 
   int lenread;                               /* Number of bytes read from request */
   char recv_data[CHUNK];                     /* Chunk read from incoming request */
-  int response_len = strlen(response);
+  int response_len = strlen(response);       /* Length of response we send to the server */
 
   /* Start listening for connections */
   if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -55,6 +55,8 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
+  /* Run the server */
+  printf("Listening on port %i....", PORT);
 
   while ( 1 ) {
     /* Accept a connection (from anywhere) when one becomes available */
@@ -80,9 +82,8 @@ int main() {
   }
 }
 
-
 void create_http_response(int client, char *message, int message_len) {
   send(client, "HTTP/1.0 200 OK\n", 16, 0);
   send(client, "Content-Type: text/html\n\n", 26, 0);
   send(client, message, message_len, 0);
-  }
+}
